@@ -12,20 +12,16 @@
             padding: 0;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             text-align: center;
-            flex-grow: 1;
-            justify-content: center;
         }
         h1 {
             font-size: 40px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .search-container {
             display: flex;
@@ -39,64 +35,40 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-        .dropdown {
-            position: relative;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            font-size: 16px;
+        .search-btn {
+            background: none;
             border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
+            font-size: 20px;
             cursor: pointer;
         }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-            min-width: 100px;
-        }
-        .dropdown-content button {
-            background-color: #f1f1f1;
-            color: #007BFF;
-            padding: 8px;
-            border: none;
-            width: 100%;
-            cursor: pointer;
-        }
-        .dropdown-content button:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-        .external-buttons {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-        .external-menu, .history-menu {
+        .dropdown-content, .external-menu, .history-menu {
             display: none;
             margin-top: 10px;
         }
-        .external-menu button, .history-menu button {
+        .dropdown-content button, .external-menu button, .history-menu button {
             background-color: #f1f1f1;
             color: #007BFF;
-            padding: 8px;
+            padding: 8px 16px;
             border: none;
             cursor: pointer;
-            margin: 0 5px;
+            margin: 5px;
         }
-        .external-menu button:hover, .history-menu button:hover {
+        .dropdown-content button:hover, .external-menu button:hover, .history-menu button:hover {
             background-color: #007BFF;
             color: white;
         }
+        .menu-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
         .powered-by {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
             text-align: center;
             font-size: 14px;
             color: #888;
-            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -105,21 +77,19 @@
         <h1>WeSearch</h1>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm...">
-            <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Search</button>
-                <div class="dropdown-content" id="dropdownMenu">
-                    <button onclick="search('google')">Google</button>
-                    <button onclick="search('bing')">Bing</button>
-                    <button onclick="search('duckduckgo')">DuckDuckGo</button>
-                    <button onclick="search('coccoc')">Cốc Cốc</button>
-                </div>
-            </div>
+            <button class="search-btn" onclick="toggleDropdown()">🔍</button>
         </div>
-        <div class="external-buttons">
-            <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
-            <button class="history-btn" onclick="toggleHistoryMenu()">Search history</button>
+        <div class="dropdown-content" id="dropdownMenu">
+            <button onclick="search('google')">Google</button>
+            <button onclick="search('bing')">Bing</button>
+            <button onclick="search('duckduckgo')">DuckDuckGo</button>
+            <button onclick="search('coccoc')">Cốc Cốc</button>
         </div>
-        <div id="externalMenu" class="external-menu">
+        <div class="menu-buttons">
+            <button class="dropbtn" onclick="toggleExternalMenu()">External utilities</button>
+            <button class="dropbtn" onclick="toggleHistoryMenu()">Search history</button>
+        </div>
+        <div class="external-menu" id="externalMenu">
             <button onclick="openLink('https://maps.google.com')">Google Maps</button>
             <button onclick="openLink('https://mail.google.com')">Google Mail</button>
             <button onclick="openLink('https://gemini.google.com')">Gemini</button>
@@ -129,7 +99,7 @@
     </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
-        <p>Nhãn hiệu ™ 2025 WeSearch Platform. Toàn quyền sử dụng.</p>
+        <p>Trademark ™ 2025 WeSearch Platform. All rights reserved..</p>
     </div>
     <script>
         function search(engine) {
@@ -152,13 +122,16 @@
             window.open(url, '_blank');
         }
         function toggleDropdown() {
-            document.getElementById('dropdownMenu').style.display ^= 'block';
+            const menu = document.getElementById('dropdownMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
         function toggleExternalMenu() {
-            document.getElementById('externalMenu').style.display ^= 'block';
+            const menu = document.getElementById('externalMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
         function toggleHistoryMenu() {
-            document.getElementById('historyMenu').style.display ^= 'block';
+            const menu = document.getElementById('historyMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
             displayHistory();
         }
         function saveSearchHistory(query) {
@@ -167,8 +140,9 @@
             localStorage.setItem('searchHistory', JSON.stringify(history.slice(0, 5)));
         }
         function displayHistory() {
+            const menu = document.getElementById('historyMenu');
             let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            document.getElementById('historyMenu').innerHTML = history.map((item, index) => `<button>${item} <span onclick="deleteHistory(${index})" style="color:red; cursor:pointer;">✖</span></button>`).join(' ');
+            menu.innerHTML = history.map((item, index) => `<button>${item} <span onclick="deleteHistory(${index})" style="color:red; cursor:pointer;">✖</span></button>`).join(' ');
         }
         function deleteHistory(index) {
             let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
