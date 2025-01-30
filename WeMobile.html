@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+v<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -81,7 +81,7 @@
         <h1>WeSearch</h1>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm...">
-            <button class="search-btn" onclick="toggleDropdown()">🔍</button>
+            <button class="dropbtn" onclick="toggleDropdown()">🔍</button>
         </div>
         <div class="dropdown-content" id="dropdownMenu">
             <button onclick="search('google')">Google</button>
@@ -89,7 +89,7 @@
             <button onclick="search('duckduckgo')">DuckDuckGo</button>
             <button onclick="search('coccoc')">Cốc Cốc</button>
         </div>
-        <div class="menu-buttons">
+        <div class="button-container">
             <button class="dropbtn" onclick="toggleExternalMenu()">External utilities</button>
             <button class="dropbtn" onclick="toggleHistoryMenu()">Search history</button>
         </div>
@@ -100,7 +100,7 @@
             <button onclick="openLink('https://chat.openai.com')">ChatGPT</button>
         </div>
         <div id="historyMenu" class="history-menu"></div>
-     </div>
+    </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
         <p>Trademark ™ 2025 WeSearch Platform. All rights reserved.</p>
