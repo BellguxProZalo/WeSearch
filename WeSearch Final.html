@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeSearch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+        h1 {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        input[type="text"] {
+            padding: 15px;
+            width: 400px;
+            font-size: 18px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            padding: 15px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content button {
+            padding: 10px 20px;
+            width: 100%;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .dropdown-content button:hover {
+            background-color: #0056b3;
+        }
+        .external-btn {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .external-btn:hover {
+            background-color: #0056b3;
+        }
+        .external-menu {
+            display: none;
+            margin-top: 10px;
+        }
+        .external-menu button {
+            background-color: #f1f1f1;
+            color: #007BFF;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        .external-menu button:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+        .powered-by {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WeSearch</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
+            <div class="dropdown">
+                <button class="dropbtn">Tìm kiếm</button>
+                <div class="dropdown-content">
+                    <button onclick="search('google')">Google</button>
+                    <button onclick="search('bing')">Bing</button>
+                    <button onclick="search('duckduckgo')">DuckDuckGo</button>
+                    <button onclick="search('coccoc')">Cốc Cốc</button>
+                </div>
+            </div>
+        </div>
+        <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
+        <div id="externalMenu" class="external-menu">
+            <button onclick="openLink('https://maps.google.com')">Google Maps</button>
+            <button onclick="openLink('https://mail.google.com')">Google Mail</button>
+            <button onclick="openLink('https://gemini.google.com')">Gemini</button>
+            <button onclick="openLink('https://chat.openai.com')">ChatGPT</button>
+        </div>
+        <div class="powered-by">
+            <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
+        </div>
+    </div>
+
+    <script>
+        function search(engine) {
+            const query = document.getElementById('searchInput').value;
+            if (query) {
+                let url = '';
+                switch(engine) {
+                    case 'google':
+                        url = `https://www.google.com/search?q=${query}`;
+                        break;
+                    case 'bing':
+                        url = `https://www.bing.com/search?q=${query}`;
+                        break;
+                    case 'duckduckgo':
+                        url = `https://duckduckgo.com/?q=${query}`;
+                        break;
+                    case 'coccoc':
+                        url = `https://coccoc.com/search?q=${query}`;
+                        break;
+                }
+                window.open(url, '_blank');
+            } else {
+                alert('Vui lòng nhập từ khóa tìm kiếm');
+            }
+        }
+
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+
+        function toggleExternalMenu() {
+            const menu = document.getElementById('externalMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+        }
+    </script>
+</body>
+</html>
