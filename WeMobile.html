@@ -19,23 +19,18 @@
         }
         .container {
             width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
             text-align: center;
         }
         h1 {
-            font-size: 60px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 15px;
         }
         .search-container {
             display: flex;
             align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
             justify-content: center;
+            flex-direction: column;
+            gap: 10px;
         }
         input[type="text"] {
             padding: 10px;
@@ -44,12 +39,8 @@
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 12px 15px;
+        .search-btn {
+            padding: 10px 15px;
             font-size: 16px;
             border: none;
             border-radius: 5px;
@@ -57,18 +48,38 @@
             color: white;
             cursor: pointer;
         }
+        .search-btn:hover {
+            background-color: #0056b3;
+        }
+        .search-options {
+            display: none;
+            flex-direction: column;
+            margin-top: 10px;
+        }
+        .search-options button {
+            background-color: #f1f1f1;
+            color: #007BFF;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            margin: 3px;
+            border-radius: 5px;
+        }
+        .search-options button:hover {
+            background-color: #007BFF;
+            color: white;
+        }
         .external-buttons {
             margin-top: 20px;
             display: flex;
             justify-content: center;
             gap: 10px;
-            width: 100%;
             flex-wrap: wrap;
         }
         .external-btn, .history-btn {
             background-color: #007BFF;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 15px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -76,64 +87,13 @@
         .external-btn:hover, .history-btn:hover {
             background-color: #0056b3;
         }
-        .external-menu, .history-menu {
-            display: none;
-            margin-top: 10px;
-        }
-        .external-menu button, .history-menu button {
-            background-color: #f1f1f1;
-            color: #007BFF;
-            padding: 8px 16px;
-            border: none;
-            cursor: pointer;
-            margin: 5px 10px;
-        }
-        .external-menu button:hover, .history-menu button:hover {
-            background-color: #007BFF;
-            color: white;
-        }
         .powered-by {
             position: absolute;
-            bottom: 20px;
+            bottom: 10px;
             font-size: 12px;
             color: #888;
             width: 100%;
             text-align: center;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-        .dropdown-content button {
-            background-color: #f1f1f1;
-            color: #007BFF;
-            padding: 12px 16px;
-            border: none;
-            text-align: left;
-            width: 100%;
-            cursor: pointer;
-        }
-        .dropdown-content button:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-        /* Responsive design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 24px;
-            }
-            .search-container {
-                width: 90%;
-                flex-direction: column;
-            }
-            .external-buttons {
-                width: 100%;
-                text-align: center;
-            }
         }
     </style>
 </head>
@@ -142,19 +102,18 @@
         <h1>WeSearch</h1>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
-            <button class="dropbtn" onclick="toggleDropdown()">Search</button>
+            <button class="search-btn" onclick="toggleSearchOptions()">Search</button>
+            <div id="searchOptions" class="search-options">
+                <button onclick="search('google')">Google</button>
+                <button onclick="search('bing')">Bing</button>
+                <button onclick="search('duckduckgo')">DuckDuckGo</button>
+                <button onclick="search('coccoc')">Cốc Cốc</button>
+            </div>
         </div>
         <div class="external-buttons">
-            <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
-            <button class="history-btn" onclick="toggleHistoryMenu()">Search history</button>
+            <button class="external-btn">External utilities</button>
+            <button class="history-btn">Search history</button>
         </div>
-        <div id="externalMenu" class="external-menu">
-            <button onclick="openLink('https://maps.google.com')">Google Maps</button>
-            <button onclick="openLink('https://mail.google.com')">Google Mail</button>
-            <button onclick="openLink('https://gemini.google.com')">Gemini</button>
-            <button onclick="openLink('https://chat.openai.com')">ChatGPT</button>
-        </div>
-        <div id="historyMenu" class="history-menu"></div>
     </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
@@ -162,68 +121,25 @@
     </div>
 
     <script>
+        function toggleSearchOptions() {
+            const options = document.getElementById('searchOptions');
+            options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
+        }
+
         function search(engine) {
             const query = document.getElementById('searchInput').value;
             if (query) {
                 let url = '';
                 switch(engine) {
-                    case 'google':
-                        url = `https://www.google.com/search?q=${query}`;
-                        break;
-                    case 'bing':
-                        url = `https://www.bing.com/search?q=${query}`;
-                        break;
-                    case 'duckduckgo':
-                        url = `https://duckduckgo.com/?q=${query}`;
-                        break;
-                    case 'coccoc':
-                        url = `https://coccoc.com/search?q=${query}`;
-                        break;
+                    case 'google': url = `https://www.google.com/search?q=${query}`; break;
+                    case 'bing': url = `https://www.bing.com/search?q=${query}`; break;
+                    case 'duckduckgo': url = `https://duckduckgo.com/?q=${query}`; break;
+                    case 'coccoc': url = `https://coccoc.com/search?q=${query}`; break;
                 }
                 window.open(url, '_blank');
-                saveSearchHistory(query);
             } else {
                 alert('Vui lòng nhập từ khóa tìm kiếm');
             }
-        }
-
-        function openLink(url) {
-            window.open(url, '_blank');
-        }
-
-        function toggleDropdown() {
-            const menu = document.getElementById('dropdownMenu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
-
-        function toggleExternalMenu() {
-            const menu = document.getElementById('externalMenu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
-
-        function toggleHistoryMenu() {
-            const menu = document.getElementById('historyMenu');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-            displayHistory();
-        }
-
-        function saveSearchHistory(query) {
-            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            history.unshift(query);
-            localStorage.setItem('searchHistory', JSON.stringify(history.slice(0, 5)));
-        }
-
-        function displayHistory() {
-            const menu = document.getElementById('historyMenu');
-            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            menu.innerHTML = history.map((item, index) => `<button>${item} <span onclick="deleteHistory(${index})" style="color:red; cursor:pointer;">✖</span></button>`).join(' ');
-        }
-
-        function deleteHistory(index) {
-            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            history.splice(index, 1);
-            localStorage.setItem('searchHistory', JSON.stringify(history));
-            displayHistory();
         }
     </script>
 </body>
