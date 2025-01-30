@@ -11,75 +11,56 @@
             margin: 0;
             padding: 0;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             flex-direction: column;
-            position: relative;
+            justify-content: space-between;
+            height: 100vh;
         }
         .container {
-            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            flex-grow: 1;
         }
         h1 {
-            font-size: 24px;
-            margin-bottom: 15px;
+            font-size: 40px;
+            margin-bottom: 20px;
         }
         .search-container {
             display: flex;
             align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 10px;
+            position: relative;
+            width: 90%;
+            max-width: 400px;
         }
-        input[type="text"] {
-            padding: 10px;
-            width: 250px;
-            font-size: 18px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        .search-btn {
-            padding: 10px 15px;
+        .search-container input {
+            padding: 15px;
+            width: 100%;
             font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007BFF;
-            color: white;
-            cursor: pointer;
+            border-radius: 25px;
+            border: 1px solid #ccc;
+            padding-right: 40px;
         }
-        .search-btn:hover {
-            background-color: #0056b3;
-        }
-        .search-options {
-            display: none;
-            flex-direction: column;
-            margin-top: 10px;
-        }
-        .search-options button {
-            background-color: #f1f1f1;
-            color: #007BFF;
-            padding: 8px 16px;
+        .search-container button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
             border: none;
             cursor: pointer;
-            margin: 3px;
-            border-radius: 5px;
-        }
-        .search-options button:hover {
-            background-color: #007BFF;
-            color: white;
+            font-size: 16px;
         }
         .external-buttons {
             margin-top: 20px;
             display: flex;
-            justify-content: center;
             gap: 10px;
-            flex-wrap: wrap;
         }
         .external-btn, .history-btn {
             background-color: #007BFF;
             color: white;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -88,12 +69,10 @@
             background-color: #0056b3;
         }
         .powered-by {
-            position: absolute;
-            bottom: 10px;
-            font-size: 12px;
-            color: #888;
-            width: 100%;
             text-align: center;
+            font-size: 14px;
+            color: #888;
+            padding: 10px;
         }
     </style>
 </head>
@@ -102,13 +81,7 @@
         <h1>WeSearch</h1>
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
-            <button class="search-btn" onclick="toggleSearchOptions()">Search</button>
-            <div id="searchOptions" class="search-options">
-                <button onclick="search('google')">Google</button>
-                <button onclick="search('bing')">Bing</button>
-                <button onclick="search('duckduckgo')">DuckDuckGo</button>
-                <button onclick="search('coccoc')">Cốc Cốc</button>
-            </div>
+            <button onclick="search()">🔍</button>
         </div>
         <div class="external-buttons">
             <button class="external-btn">External utilities</button>
@@ -119,24 +92,11 @@
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
         <p>Trademark ™ 2025 WeSearch Platform. All rights reserved.</p>
     </div>
-
     <script>
-        function toggleSearchOptions() {
-            const options = document.getElementById('searchOptions');
-            options.style.display = options.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function search(engine) {
+        function search() {
             const query = document.getElementById('searchInput').value;
             if (query) {
-                let url = '';
-                switch(engine) {
-                    case 'google': url = `https://www.google.com/search?q=${query}`; break;
-                    case 'bing': url = `https://www.bing.com/search?q=${query}`; break;
-                    case 'duckduckgo': url = `https://duckduckgo.com/?q=${query}`; break;
-                    case 'coccoc': url = `https://coccoc.com/search?q=${query}`; break;
-                }
-                window.open(url, '_blank');
+                window.open(`https://www.google.com/search?q=${query}`, '_blank');
             } else {
                 alert('Vui lòng nhập từ khóa tìm kiếm');
             }
