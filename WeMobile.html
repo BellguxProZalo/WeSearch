@@ -30,15 +30,18 @@
         }
         input[type="text"] {
             padding: 10px;
-            width: 250px;
+            width: 300px;
             font-size: 16px;
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-        .search-btn {
-            background: none;
+        .dropbtn {
+            padding: 10px 15px;
+            font-size: 16px;
             border: none;
-            font-size: 20px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
             cursor: pointer;
         }
         .dropdown-content, .external-menu, .history-menu {
@@ -57,10 +60,11 @@
             background-color: #007BFF;
             color: white;
         }
-        .menu-buttons {
+        .button-container {
             display: flex;
+            justify-content: center;
             gap: 10px;
-            margin-top: 10px;
+            margin-top: 15px;
         }
         .powered-by {
             position: absolute;
@@ -99,7 +103,7 @@
      </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
-        <p>Nhãn hiệu ™ 2025 WeSearch Platform. Toàn quyền sử dụng.</p>
+        <p>Trademark ™ 2025 WeSearch Platform. All rights reserved.</p>
     </div>
     <script>
         function search(engine) {
