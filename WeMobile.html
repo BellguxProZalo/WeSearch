@@ -13,15 +13,15 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             text-align: center;
             flex-grow: 1;
+            justify-content: center;
         }
         h1 {
             font-size: 40px;
@@ -30,49 +30,73 @@
         .search-container {
             display: flex;
             align-items: center;
-            position: relative;
-            width: 90%;
-            max-width: 400px;
+            gap: 10px;
         }
-        .search-container input {
-            padding: 15px;
-            width: 100%;
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
             font-size: 16px;
-            border-radius: 25px;
+            border-radius: 5px;
             border: 1px solid #ccc;
-            padding-right: 40px;
         }
-        .search-container button {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
+        .dropdown {
+            position: relative;
+        }
+        .dropbtn {
+            padding: 10px 15px;
             font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+            z-index: 1;
+            min-width: 100px;
+        }
+        .dropdown-content button {
+            background-color: #f1f1f1;
+            color: #007BFF;
+            padding: 8px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+        }
+        .dropdown-content button:hover {
+            background-color: #007BFF;
+            color: white;
         }
         .external-buttons {
             margin-top: 20px;
             display: flex;
             gap: 10px;
         }
-        .external-btn, .history-btn {
+        .external-menu, .history-menu {
+            display: none;
+            margin-top: 10px;
+        }
+        .external-menu button, .history-menu button {
+            background-color: #f1f1f1;
+            color: #007BFF;
+            padding: 8px;
+            border: none;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .external-menu button:hover, .history-menu button:hover {
             background-color: #007BFF;
             color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .external-btn:hover, .history-btn:hover {
-            background-color: #0056b3;
         }
         .powered-by {
             text-align: center;
             font-size: 14px;
             color: #888;
-            padding: 10px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -80,26 +104,77 @@
     <div class="container">
         <h1>WeSearch</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
-            <button onclick="search()">🔍</button>
+            <input type="text" id="searchInput" placeholder="Tìm kiếm...">
+            <div class="dropdown">
+                <button class="dropbtn" onclick="toggleDropdown()">Search</button>
+                <div class="dropdown-content" id="dropdownMenu">
+                    <button onclick="search('google')">Google</button>
+                    <button onclick="search('bing')">Bing</button>
+                    <button onclick="search('duckduckgo')">DuckDuckGo</button>
+                    <button onclick="search('coccoc')">Cốc Cốc</button>
+                </div>
+            </div>
         </div>
         <div class="external-buttons">
-            <button class="external-btn">External utilities</button>
-            <button class="history-btn">Search history</button>
+            <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
+            <button class="history-btn" onclick="toggleHistoryMenu()">Search history</button>
         </div>
+        <div id="externalMenu" class="external-menu">
+            <button onclick="openLink('https://maps.google.com')">Google Maps</button>
+            <button onclick="openLink('https://mail.google.com')">Google Mail</button>
+            <button onclick="openLink('https://gemini.google.com')">Gemini</button>
+            <button onclick="openLink('https://chat.openai.com')">ChatGPT</button>
+        </div>
+        <div id="historyMenu" class="history-menu"></div>
     </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
-        <p>Trademark ™ 2025 WeSearch Platform. All rights reserved.</p>
+        <p>Nhãn hiệu ™ 2025 WeSearch Platform. Toàn quyền sử dụng.</p>
     </div>
     <script>
-        function search() {
+        function search(engine) {
             const query = document.getElementById('searchInput').value;
             if (query) {
-                window.open(`https://www.google.com/search?q=${query}`, '_blank');
+                let url = '';
+                switch(engine) {
+                    case 'google': url = `https://www.google.com/search?q=${query}`; break;
+                    case 'bing': url = `https://www.bing.com/search?q=${query}`; break;
+                    case 'duckduckgo': url = `https://duckduckgo.com/?q=${query}`; break;
+                    case 'coccoc': url = `https://coccoc.com/search?q=${query}`; break;
+                }
+                window.open(url, '_blank');
+                saveSearchHistory(query);
             } else {
                 alert('Vui lòng nhập từ khóa tìm kiếm');
             }
+        }
+        function openLink(url) {
+            window.open(url, '_blank');
+        }
+        function toggleDropdown() {
+            document.getElementById('dropdownMenu').style.display ^= 'block';
+        }
+        function toggleExternalMenu() {
+            document.getElementById('externalMenu').style.display ^= 'block';
+        }
+        function toggleHistoryMenu() {
+            document.getElementById('historyMenu').style.display ^= 'block';
+            displayHistory();
+        }
+        function saveSearchHistory(query) {
+            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            history.unshift(query);
+            localStorage.setItem('searchHistory', JSON.stringify(history.slice(0, 5)));
+        }
+        function displayHistory() {
+            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            document.getElementById('historyMenu').innerHTML = history.map((item, index) => `<button>${item} <span onclick="deleteHistory(${index})" style="color:red; cursor:pointer;">✖</span></button>`).join(' ');
+        }
+        function deleteHistory(index) {
+            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+            history.splice(index, 1);
+            localStorage.setItem('searchHistory', JSON.stringify(history));
+            displayHistory();
         }
     </script>
 </body>
