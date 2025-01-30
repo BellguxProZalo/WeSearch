@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeSearch</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4285F4;
+        }
+        .search-box {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 24px;
+            padding: 10px;
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            padding: 8px;
+        }
+        .search-box button {
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="logo">weseach</div>
+    
+    <form action="https://www.google.com/search" method="GET" class="search-box">
+        <input type="text" name="q" placeholder="Tìm kiếm trên WeSearch..." autofocus>
+        <button type="submit">Tìm kiếm</button>
+    </form>
+
+    <div class="footer">WeSearch 2025. Powered By ChatGPT and Google</div>
+
+</body>
+</html>
