@@ -56,8 +56,9 @@
             margin-top: 20px;
             display: flex;
             gap: 10px;
+            justify-content: center; /* Căn giữa */
         }
-        .external-btn, .history-btn {
+        .external-btn, .history-btn, .services-btn {
             background-color: #007BFF;
             color: white;
             padding: 10px 20px;
@@ -65,14 +66,14 @@
             border-radius: 5px;
             cursor: pointer;
         }
-        .external-btn:hover, .history-btn:hover {
+        .external-btn:hover, .history-btn:hover, .services-btn:hover {
             background-color: #0056b3;
         }
-        .external-menu, .history-menu {
+        .external-menu, .history-menu, .services-menu {
             display: none;
             margin-top: 10px;
         }
-        .external-menu button, .history-menu button {
+        .external-menu button, .history-menu button, .services-menu button {
             background-color: #f1f1f1;
             color: #007BFF;
             padding: 8px 16px;
@@ -80,7 +81,7 @@
             cursor: pointer;
             margin: 0 10px;
         }
-        .external-menu button:hover, .history-menu button:hover {
+        .external-menu button:hover, .history-menu button:hover, .services-menu button:hover {
             background-color: #007BFF;
             color: white;
         }
@@ -115,6 +116,15 @@
             background-color: #007BFF;
             color: white;
         }
+        .services-menu {
+            display: none;
+            text-align: left;
+        }
+        .services-menu .row {
+            display: flex;
+            justify-content: space-evenly;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -135,6 +145,7 @@
         <div class="external-buttons">
             <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
             <button class="history-btn" onclick="toggleHistoryMenu()">Search history</button>
+            <button class="services-btn" onclick="toggleServicesMenu()">WeSearch services</button>
         </div>
         <div id="externalMenu" class="external-menu">
             <button onclick="openLink('https://maps.google.com')">Google Maps</button>
@@ -143,6 +154,25 @@
             <button onclick="openLink('https://chat.openai.com')">ChatGPT</button>
         </div>
         <div id="historyMenu" class="history-menu"></div>
+        <div id="servicesMenu" class="services-menu">
+            <div class="row">
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeMail</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeGames</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeMessenger</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeHome</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeMarket</button>
+            </div>
+            <div class="row">
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeAI</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeMaps</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeCloud</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WePhotos</button>
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeTranslate</button>
+            </div>
+            <div class="row">
+                <button onclick="openLink('https://bellguxprozalo.github.io/WeSearch/WeServerShutdown.html')">WeFinance</button>
+            </div>
+        </div>
     </div>
     <div class="powered-by">
         <p>Powered by Google, Bing, Duckduckgo, Cốc Cốc and ChatGPT</p>
@@ -192,6 +222,11 @@
             const menu = document.getElementById('historyMenu');
             menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
             displayHistory();
+        }
+
+        function toggleServicesMenu() {
+            const menu = document.getElementById('servicesMenu');
+            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
         }
 
         function saveSearchHistory(query) {
