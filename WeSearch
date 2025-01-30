@@ -115,7 +115,7 @@
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Tìm kiếm..." />
             <div class="dropdown">
-                <button class="dropbtn" onclick="toggleDropdown()">Tìm kiếm</button>
+                <button class="dropbtn" onclick="toggleDropdown()">Search</button>
                 <div class="dropdown-content" id="dropdownMenu">
                     <button onclick="search('google')">Google</button>
                     <button onclick="search('bing')">Bing</button>
@@ -126,7 +126,7 @@
         </div>
         <div class="external-buttons">
             <button class="external-btn" onclick="toggleExternalMenu()">External utilities</button>
-            <button class="history-btn" onclick="toggleHistoryMenu()">Lịch sử tìm kiếm</button>
+            <button class="history-btn" onclick="toggleHistoryMenu()">Search history</button>
         </div>
         <div id="externalMenu" class="external-menu">
             <button onclick="openLink('https://maps.google.com')">Google Maps</button>
